@@ -16,17 +16,20 @@ public class HtmlFormatterFromReader implements HtmlFormatter {
 
     @Override
     public void convertToHtml() throws IOException {
-        String line = bufferedReader.readLine();
-        while (line != null) {
+        String line;
+        while ((line = getNextLine()) != null) {
             convertLine(line);
             addNewLine();
-            line = bufferedReader.readLine();
         }
     }
 
     @Override
     public String getHtml() {
         return html.toString();
+    }
+
+    private String getNextLine() throws IOException {
+        return bufferedReader.readLine();
     }
 
     private void convertLine(String line) {
