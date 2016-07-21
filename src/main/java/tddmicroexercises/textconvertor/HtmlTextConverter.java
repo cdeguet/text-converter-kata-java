@@ -14,7 +14,15 @@ public class HtmlTextConverter
         return convertToHtml(getFileReader());
     }
 
-    public String convertToHtml(Reader reader) throws IOException{
+    public String getFilename() {
+        return this.fullFilenameWithPath;
+    }
+
+    protected Reader getFileReader() throws FileNotFoundException {
+        return new FileReader(fullFilenameWithPath);
+    }
+
+    private String convertToHtml(Reader reader) throws IOException{
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line = bufferedReader.readLine();
         String html = "";
@@ -25,13 +33,5 @@ public class HtmlTextConverter
             line = bufferedReader.readLine();
         }
         return html;
-    }
-
-    private Reader getFileReader() throws FileNotFoundException {
-        return new FileReader(fullFilenameWithPath);
-    }
-
-    public String getFilename() {
-        return this.fullFilenameWithPath;
     }
 }
