@@ -18,9 +18,21 @@ public class HtmlTextConverterTest {
     }
 
     @Test
+    public void emptyTextShouldReturnEmpty() throws IOException {
+        String empty = "";
+        assertEquals(empty, convertStringToHtml(empty));
+    }
+
+    @Test
     public void newLineShouldReturnBR() throws IOException {
         String newLine = "\n";
         assertEquals("<br />", convertStringToHtml(newLine));
+    }
+
+    @Test
+    public void ampersandShouldBeEscaped() throws IOException {
+        String text = "foo&bar\n";
+        assertEquals("foo&amp;bar<br />", convertStringToHtml(text));
     }
 
     @Test

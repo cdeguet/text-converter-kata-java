@@ -2,6 +2,7 @@ package tddmicroexercises.textconvertor;
 
 import java.io.*;
 
+// The name is badly chosen but we are not allowed to change it :(
 public class HtmlTextConverter
 {
     private String fullFilenameWithPath;
@@ -11,27 +12,21 @@ public class HtmlTextConverter
     }
 
     public String convertToHtml() throws IOException {
-        return convertToHtml(getFileReader());
+        HtmlFormatter formatter = getHtmlFormatter();
+        formatter.convertToHtml();
+        return formatter.getHtml();
     }
 
     public String getFilename() {
         return this.fullFilenameWithPath;
     }
 
-    protected Reader getFileReader() throws FileNotFoundException {
-        return new FileReader(fullFilenameWithPath);
+    protected HtmlFormatter getHtmlFormatter() throws FileNotFoundException {
+        Reader fileReader = getFileReader();
+        return new HtmlFormatterFromReader(fileReader);
     }
 
-    private String convertToHtml(Reader reader) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String line = bufferedReader.readLine();
-        String html = "";
-        while (line != null)
-        {
-            html += StringEscapeUtils.escapeHtml(line);
-            html += "<br />";
-            line = bufferedReader.readLine();
-        }
-        return html;
+    protected Reader getFileReader() throws FileNotFoundException {
+        return new FileReader(fullFilenameWithPath);
     }
 }
