@@ -25,6 +25,16 @@ public class HtmlTextConverterTest {
     @Test
     public void newLineShouldReturnBR() throws IOException {
         String newLine = "\n";
-        assertEquals("<br />", converter.convertToHtml(new StringReader(newLine)));
+        assertEquals("<br />", convertStringToHtml(newLine));
+    }
+
+    @Test
+    public void twoLinesShouldGiveTwoBRs() throws IOException {
+        String twoLines = "foo\nbar";
+        assertEquals("foo<br />bar<br />", convertStringToHtml(twoLines));
+    }
+
+    private String convertStringToHtml(String text) throws IOException {
+        return converter.convertToHtml(new StringReader(text));
     }
 }
