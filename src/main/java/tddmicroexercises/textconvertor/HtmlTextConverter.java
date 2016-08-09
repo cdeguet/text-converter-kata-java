@@ -10,6 +10,7 @@ public class HtmlTextConverter {
 
     public HtmlTextConverter(String fullFilenameWithPath) {
         this.fullFilenameWithPath = fullFilenameWithPath;
+        this.readerFactory = new FileReaderFactory(fullFilenameWithPath);
     }
 
     public HtmlTextConverter(ReaderFactory readerFactory) {

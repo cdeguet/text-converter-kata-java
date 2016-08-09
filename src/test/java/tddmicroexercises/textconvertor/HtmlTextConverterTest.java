@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -32,6 +33,12 @@ public class HtmlTextConverterTest {
     public void ampersandShouldBeEscaped() throws IOException {
         String text = "foo&bar\n";
         assertEquals("foo&amp;bar<br />", convertStringToHtml(text));
+    }
+
+    @Test(expected=FileNotFoundException.class)
+    public void invalidFileShouldThrowException() throws IOException {
+        HtmlTextConverter converter = new HtmlTextConverter("");
+        converter.convertToHtml();
     }
 
     @Test
