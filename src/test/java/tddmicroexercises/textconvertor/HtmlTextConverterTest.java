@@ -41,21 +41,20 @@ public class HtmlTextConverterTest {
     }
 
     private String convertStringToHtml(String text) throws IOException {
-        HtmlTextConverter converter = new TestableHtmlTextConverter(text);
+        StringReaderFactory readerFactory = new StringReaderFactory(text);
+        HtmlTextConverter converter = new HtmlTextConverter(readerFactory);
         return converter.convertToHtml();
     }
 
-    protected class TestableHtmlTextConverter extends HtmlTextConverter {
-
+    private class StringReaderFactory implements ReaderFactory {
         private String text;
 
-        public TestableHtmlTextConverter(String text) {
-            super(null);
+        public StringReaderFactory(String text) {
             this.text = text;
         }
 
         @Override
-        protected Reader getFileReader() {
+        public Reader createReader() {
             return new StringReader(text);
         }
     }

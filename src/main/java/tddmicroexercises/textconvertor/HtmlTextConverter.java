@@ -3,12 +3,17 @@ package tddmicroexercises.textconvertor;
 import java.io.*;
 
 // The name is badly chosen but we are not allowed to change it :(
-public class HtmlTextConverter
-{
+public class HtmlTextConverter {
+
     private String fullFilenameWithPath;
+    private ReaderFactory readerFactory;
 
     public HtmlTextConverter(String fullFilenameWithPath) {
         this.fullFilenameWithPath = fullFilenameWithPath;
+    }
+
+    public HtmlTextConverter(ReaderFactory readerFactory) {
+        this.readerFactory = readerFactory;
     }
 
     public String convertToHtml() throws IOException {
@@ -21,12 +26,8 @@ public class HtmlTextConverter
         return this.fullFilenameWithPath;
     }
 
-    protected HtmlFormatter getHtmlFormatter() throws FileNotFoundException {
-        Reader fileReader = getFileReader();
-        return new HtmlFormatterFromReader(fileReader);
-    }
-
-    protected Reader getFileReader() throws FileNotFoundException {
-        return new FileReader(fullFilenameWithPath);
+    private HtmlFormatter getHtmlFormatter() throws IOException {
+        Reader fileReader = readerFactory.createReader();
+        return new HtmlFormatter(fileReader);
     }
 }
